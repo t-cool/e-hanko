@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>eハンコ</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script>
+        // OpenCVのステータス表示用の関数
+        function onOpenCvReady() {
+            console.log('OpenCV.js is ready.');
+            document.getElementById('opencv-loading').style.display = 'none';
+            document.getElementById('app-container').style.display = 'block';
+        }
+    </script>
+    <script async src="https://docs.opencv.org/4.7.0/opencv.js" onload="onOpenCvReady();"></script>
+</head>
+<body>
+    <div id="opencv-loading" class="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>画像処理ライブラリを読み込み中...</p>
+        </div>
+    </div>
+
+    <div id="app-container" class="container" style="display: none;">
+        <div class="logo-container">
+            <img src="image.png" alt="eハンコロゴ" class="logo">
+        </div>
+        <h1>eハンコ</h1>
+        <p>印鑑画像からデジタル印鑑を生成します。</p>
+        
+        <div class="upload-area">
+            <div class="upload-buttons">
+                <div class="upload-button-container">
+                    <input type="file" id="sealInput" accept="image/*" class="hidden">
+                    <button onclick="document.getElementById('sealInput').click();" class="upload-button">画像を選択</button>
+                </div>
+                <div class="upload-button-container">
+                    <button id="cameraButton" class="camera-button">カメラで撮影</button>
+                </div>
+            </div>
+            <span id="file-name">ファイルが選択されていません</span>
+        </div>
+
+        <div class="preview-area">
+            <div class="original-image">
+                <h3 class="image-title" style="display: none;">元の画像</h3>
+                <div class="image-container">
+                    <img id="original-preview" src="#" alt="プレビュー" style="display: none;">
+                </div>
+            </div>
+            <div class="processed-image">
+                <h3 class="image-title" style="display: none;">処理後の画像</h3>
+                <div class="image-container">
+                    <img id="processed-preview" src="#" alt="処理後" style="display: none;">
+                    <div id="loading" class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>処理中...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="multi-seals-container" class="multi-seals-container" style="display: none;">
+            <h3>検出された印鑑（<span id="seal-count">0</span>個）</h3>
+            <div id="seals-preview" class="seals-preview"></div>
+        </div>
+
+        <div class="button-area">
+            <button id="processButton" disabled>処理開始</button>
+            <button id="downloadButton" disabled>単一ダウンロード</button>
+            <button id="downloadZipButton" disabled>ZIP一括ダウンロード</button>
+        </div>
+
+        <div class="settings">
+            <h3>設定</h3>
+            <div class="setting-item">
+                <label for="threshold">透過しきい値：</label>
+                <input type="range" id="threshold" min="0" max="255" value="240">
+                <span id="threshold-value">240</span>
+            </div>
+            
+            <div class="settings-row">
+                <div class="setting-item half-width">
+                    <label for="sealColor">印影の色：</label>
+                    <div class="color-container">
+                        <select id="sealColor">
+                            <option value="red">朱色（赤）</option>
+                            <option value="black">黒</option>
+                            <option value="blue">青</option>
+                            <option value="custom">カスタム</option>
+                        </select>
+                        <input type="color" id="customColor" value="#FF0000" style="display: none; margin-left: 5px;">
+                    </div>
+                </div>
+                
+                <div class="setting-item half-width">
+                    <label for="quality">画質：</label>
+                    <select id="quality">
+                        <option value="1">高品質</option>
+                        <option value="0.9" selected>標準</option>
+                        <option value="0.8">圧縮</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <label for="detectMultiple">複数印鑑検出：</label>
+                <input type="checkbox" id="detectMultiple" checked>
+                <span class="checkbox-label">自動で複数の印鑑を検出する</span>
+            </div>
+            
+            <div class="setting-item">
+                <label for="resizeImage">大きな画像をリサイズ：</label>
+                <input type="checkbox" id="resizeImage" checked>
+                <span class="checkbox-label">処理速度向上のため画像を縮小する</span>
+            </div>
+        </div>
+        
+        <div class="info-message">
+            <p>※大きな画像や多数の印鑑を含む画像は処理に時間がかかる場合があります。</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

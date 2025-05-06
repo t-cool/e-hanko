@@ -1,0 +1,475 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    position: fixed;
+    touch-action: manipulation;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f7f7f7;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px 30px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+h1 {
+    text-align: center;
+    margin: 8px 0 12px;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #41a1a1;
+    font-family: 'M PLUS Rounded 1c', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+h3 {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+p {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.upload-area {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.upload-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.upload-button-container {
+    width: 160px;
+}
+
+.hidden {
+    display: none;
+}
+
+button.upload-button,
+button.camera-button {
+    width: 160px;
+    height: 50px;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    text-align: center;
+    transition: background-color 0.3s;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: none;
+}
+
+button.upload-button:hover {
+    background-color: #45a049;
+}
+
+button.camera-button {
+    background-color: #2196F3;
+}
+
+button.camera-button:hover {
+    background-color: #0b7dda;
+}
+
+#file-name {
+    display: none;
+}
+
+.preview-area {
+    display: none;
+    justify-content: space-between;
+    margin-bottom: 100px;
+    flex: 1;
+    min-height: 160px;
+    max-height: 400px;
+    border: none;
+}
+
+.preview-area.has-image {
+    display: flex;
+}
+
+.original-image, .processed-image {
+    width: 48%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-container {
+    display: none;
+    flex: 1;
+    min-height: 160px;
+    max-height: 300px;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    box-shadow: none;
+}
+
+.image-container.has-image {
+    display: flex;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 複数印鑑表示エリア */
+.multi-seals-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.seals-preview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.seal-item {
+    width: 120px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.seal-preview {
+    width: 100%;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.seal-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.seal-checkbox {
+    margin-right: 5px;
+}
+
+.button-area {
+    margin: 60px 0 15px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
+}
+
+button {
+    padding: 12px 24px;
+    margin: 0 10px 10px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    min-width: 160px;
+    position: relative;
+    top: 20px;
+}
+
+button:hover {
+    background-color: #0b7dda;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.settings {
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 1px solid #eee;
+}
+
+.settings-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.setting-item {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.setting-item.half-width {
+    flex: 1;
+    min-width: 180px;
+    margin: 5px 0;
+}
+
+.setting-item.half-width label {
+    width: 80px;
+    min-width: 80px;
+}
+
+.setting-item label {
+    margin-right: 10px;
+    width: 120px;
+}
+
+.setting-item input[type="range"] {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.setting-item.half-width select {
+    flex: 1;
+    min-width: 100px;
+    max-width: 150px;
+}
+
+.setting-item select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    min-width: 150px;
+}
+
+.setting-item input[type="color"] {
+    height: 35px;
+    width: 50px;
+    border: none;
+    padding: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.checkbox-label {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ローディング表示 */
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-content {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2196F3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading p, .loading-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.info-message {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.info-message p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.info-message p:last-child {
+    margin-bottom: 0;
+}
+
+/* iOS用の高さ調整 - 100vhが正確に機能しない問題への対応 */
+@supports (-webkit-touch-callout: none) {
+    .container {
+        height: -webkit-fill-available;
+    }
+}
+
+/* オリジナルのメディアクエリは削除 */
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .preview-area {
+        flex-direction: column;
+    }
+
+    .original-image, .processed-image {
+        width: 100%;
+        margin-bottom: 20px;
+        min-height: 150px;
+    }
+    
+    .image-container {
+        min-height: 150px;
+    }
+
+    .button-area {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button-area button {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+        min-width: 200px;
+    }
+    
+    .setting-item {
+        flex-wrap: wrap;
+    }
+    
+    .setting-item label {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .seals-preview {
+        justify-content: center;
+    }
+}
+
+.color-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+} 
