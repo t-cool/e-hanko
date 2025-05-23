@@ -50,4 +50,6 @@
 
 ## ライセンス
 
-MIT
+[GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html)
+
+Copyright © 2025 Hiroki Noguchi
