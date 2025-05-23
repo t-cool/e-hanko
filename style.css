@@ -499,6 +499,15 @@ button:disabled {
     color: #666;
 }
 
+.footer a {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
 /* ボタンエリアのマージン調整（フッター分のスペース確保） */
 .button-area {
     margin-bottom: 35px;
